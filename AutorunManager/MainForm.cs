@@ -161,6 +161,28 @@ namespace AutorunManager
             }
         }
 
+        /// <summary>
+        /// Update selection
+        /// </summary>
+        private void updateSelection()
+        {
+            if (listViewAutorun.SelectedItems.Count == 1)
+                selected_autorun_item = (RegistryType)(listViewAutorun.SelectedItems[0].Tag);
+            else
+                selected_autorun_item = null;
+            bool selected = (selected_autorun_item != null);
+            panelAttributes.Visible = selected;
+            removeSelectedToolStripMenuItem.Enabled = selected;
+            removeSelectedToolStripMenuItem1.Enabled = selected;
+            buttonSave.Enabled = selected;
+            saveEntryToolStripMenuItem.Enabled = selected;
+            if (selected)
+            {
+                textBoxName.Text = selected_autorun_item.Name;
+                textBoxValue.Text = selected_autorun_item.Value.ToString();
+            }
+        }
+
         #endregion
 
         #region Events
@@ -212,6 +234,7 @@ namespace AutorunManager
         /// <param name="e">Parameters</param>
         private void radioButtonGeneric_CheckedChanged(object sender, EventArgs e)
         {
+            updateSelection();
             loadAutorunItems();
         }
 
@@ -272,21 +295,7 @@ namespace AutorunManager
         /// <param name="e">Parameters</param>
         private void listViewAutorun_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (listViewAutorun.SelectedItems.Count == 1)
-                selected_autorun_item = (RegistryType)(listViewAutorun.SelectedItems[0].Tag);
-            else
-                selected_autorun_item = null;
-            bool selected = (selected_autorun_item != null);
-            panelAttributes.Visible = selected;
-            removeSelectedToolStripMenuItem.Enabled = selected;
-            removeSelectedToolStripMenuItem1.Enabled = selected;
-            buttonSave.Enabled = selected;
-            saveEntryToolStripMenuItem.Enabled = selected;
-            if (selected)
-            {
-                textBoxName.Text = selected_autorun_item.Name;
-                textBoxValue.Text = selected_autorun_item.Value.ToString();
-            }
+            updateSelection();
         }
 
         #endregion
